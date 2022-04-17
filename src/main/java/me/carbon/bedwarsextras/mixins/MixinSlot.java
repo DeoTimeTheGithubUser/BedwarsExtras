@@ -26,23 +26,16 @@ public abstract class MixinSlot {
     private void getStack(CallbackInfoReturnable<ItemStack> cir) {
         ItemStack item = cir.getReturnValue();
         if (item == null) return;
-        if (inventory.getStackInSlot(0) != null && inventory.getStackInSlot(0).getDisplayName().contains("Quick Buy")
-                && (getSlotIndex() > 0 && getSlotIndex() < 9)) {
-            ItemSteal.INSTANCE.setBwGui(item);
-            return;
-        }
-        if (inventory.getDisplayName().getUnformattedText().equalsIgnoreCase("Hotbar Manager")
-                && (getSlotIndex() > 17 && getSlotIndex() < 45)) {
-            ItemSteal.INSTANCE.setBwGui(item);
-            return;
-        }
         NBTTagCompound nbt = item.getTagCompound();
         if (nbt == null) return;
+        String displayName = nbt.getCompoundTag("display").getString("Name");
+        if (ItemSteal.INSTANCE.getMappedName(displayName) == null) return;
+        if (ItemSteal.INSTANCE.checkQuickBuy(inventory)
+                && (getSlotIndex() > 0 && getSlotIndex() < 9)) return;
+        if (inventory.getDisplayName().getFormattedText().contains("Hotbar Manager")
+                && (getSlotIndex() > 17 && getSlotIndex() < 45)) return;
         item.setTagCompound(ItemSteal.INSTANCE.formatNbt(nbt));
         cir.setReturnValue(item);
     }
-
-    // first gui: Quick Buy
-    // 1-8
 
 }

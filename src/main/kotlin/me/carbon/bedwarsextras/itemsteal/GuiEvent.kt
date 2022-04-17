@@ -21,15 +21,15 @@ class GuiEvent {
             Minecraft.getMinecraft().mouseHelper.grabMouseCursor()
             if (guiName.contains("Quick Buy")) {
                 Thread {
-                    Thread.sleep(100)
+                    Thread.sleep(50)
                     clickContainer(gui.inventorySlots, 53)
                 }.start()
             }
             if (guiName.contains("Hotbar Manager")) {
                 Thread {
-                    Thread.sleep(100)
+                    Thread.sleep(50)
                     clickContainer(gui.inventorySlots, 19 + ItemSteal.stealItem!!.getPosition())
-                    Thread.sleep(100)
+                    Thread.sleep(50)
                     Minecraft.getMinecraft().thePlayer.sendChatMessage("/report TimeDeo")
                 }.start()
             }

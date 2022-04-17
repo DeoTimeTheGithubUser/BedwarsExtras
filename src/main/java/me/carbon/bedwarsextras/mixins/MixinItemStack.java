@@ -13,9 +13,11 @@ public class MixinItemStack {
     @Inject(method = "getDisplayName", at = @At("RETURN"), cancellable = true)
     private void getDisplayName(CallbackInfoReturnable<String> cir) {
         ItemStack stack = ((ItemStack) (Object) this);
-        if (ItemSteal.INSTANCE.isBwGui(stack)) return;
+        if (cir.getReturnValue().contains("Quick Buy")) return;
         String mappedName = ItemSteal.INSTANCE.getMappedName(cir.getReturnValue());
-        if (mappedName != null) cir.setReturnValue(mappedName);
+        if (mappedName == null) return;
+        if (ItemSteal.INSTANCE.isBwGui(stack)) return;
+        cir.setReturnValue(mappedName);
     }
 
 }

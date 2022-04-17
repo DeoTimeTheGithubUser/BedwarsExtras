@@ -2,7 +2,6 @@ package me.carbon.bedwarsextras.mixins;
 
 import io.netty.channel.ChannelHandlerContext;
 import me.carbon.bedwarsextras.itemsteal.ItemSteal;
-import me.carbon.bedwarsextras.utils.MCUtilsKt;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.NetworkManager;
@@ -29,38 +28,17 @@ public class MixinNetworkManager {
                     info.cancel();
                     new Thread(() -> {
                         try {
-                            Thread.sleep(100);
+                            Thread.sleep(50);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
                         C0DPacketCloseWindow closePacket = new C0DPacketCloseWindow(Minecraft.getMinecraft().thePlayer.inventoryContainer.windowId);
                         Minecraft.getMinecraft().getNetHandler().addToSendQueue(closePacket);
+                        Minecraft.getMinecraft().thePlayer.inventory.setItemStack(null);
                         ItemSteal.INSTANCE.finish();
                     }).start();
                 }
             }
         }
     }
-
-/*
-
-
-    first menu: Quick Buy
-    second menu: Hotbar Manager
-
-    block: Blocks
-    sword: Melee
-    pickaxe: Tools
-    bow: Ranged
-    brewing stand: Potions
-    tnt: Utility
-
-    book name: -
-
-    first menu click: 53
-    second menu starter slot: 18...
-
-
-*/
-
 }
