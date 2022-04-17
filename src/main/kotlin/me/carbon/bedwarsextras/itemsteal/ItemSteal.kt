@@ -71,10 +71,6 @@ object ItemSteal {
         stealItem = null
     }
 
-//    fun getMappedName(item: ItemStack): String? {
-//        return getMappedName(item.displayName)
-//    }
-
     fun getMappedName(displayName: String): String? {
         return ("${BedwarsExtras.PREFIX} \u00a7f" + (mappedNames[displayName.replace(Regex("\u00a7[0-9a-f]"), "")]
             ?: return null))

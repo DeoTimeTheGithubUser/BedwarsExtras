@@ -16,6 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(NetworkManager.class)
 public class MixinNetworkManager {
 
+    // TODO Put item into inventory instead of dropping
     @Inject(method = "channelRead0", at = @At("HEAD"), cancellable = true)
     private void onChannelRead(ChannelHandlerContext context, Packet<?> packet, CallbackInfo info) {
         if (Minecraft.getMinecraft().thePlayer == null) return;
