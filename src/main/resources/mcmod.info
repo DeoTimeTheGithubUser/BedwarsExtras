@@ -1,14 +1,15 @@
 [
   {
-    "modid": "templatemod",
-    "name": "TemplateMod",
+    "modid": "BedwarsExtras",
+    "name": "BedwarsExtras",
     "description": "",
     "version": "${version}",
     "mcversion": "${mcversion}",
     "url": "",
     "updateUrl": "",
     "authorList": [
-      ""
+      "deotime",
+      "s_a_d"
     ],
     "credits": "",
     "logoFile": "",

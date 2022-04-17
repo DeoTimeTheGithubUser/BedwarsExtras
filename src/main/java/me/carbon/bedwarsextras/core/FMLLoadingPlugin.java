@@ -1,4 +1,4 @@
-package me.sad.templatemod.core;
+package me.carbon.bedwarsextras.core;
 
 import net.minecraftforge.common.ForgeVersion;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
@@ -12,23 +12,33 @@ public class FMLLoadingPlugin implements IFMLLoadingPlugin {
 
     public FMLLoadingPlugin() {
         System.out.println("Injecting mixin");
-        System.setProperty("devauth.enabled", "true");
-        System.setProperty("devauth.account", "main");
+//        System.setProperty("devauth.enabled", "true");
+//        System.setProperty("devauth.account", "main");
         MixinBootstrap.init();
-        Mixins.addConfiguration("templatemod.mixins.json");
+        Mixins.addConfiguration("bedwarsextras.mixins.json");
     }
 
-    @Override public String[] getASMTransformerClass() {
+    @Override
+    public String[] getASMTransformerClass() {
         return new String[0];
     }
-    @Override public String getModContainerClass() {
+
+    @Override
+    public String getModContainerClass() {
         return null;
     }
-    @Override public String getSetupClass() {
+
+    @Override
+    public String getSetupClass() {
         return null;
     }
-    @Override public void injectData(Map<String, Object> data) { }
-    @Override public String getAccessTransformerClass() {
+
+    @Override
+    public void injectData(Map<String, Object> data) {
+    }
+
+    @Override
+    public String getAccessTransformerClass() {
         return null;
     }
 }

@@ -1,0 +1,11 @@
+{
+  "required": true,
+  "compatibilityLevel": "JAVA_8",
+  "package": "me.carbon.bedwarsextras.mixins",
+  "refmap": "mixins.bedwarsextras.refmap.json",
+  "mixins": [
+    "MixinItemStack",
+    "MixinNetworkManager",
+    "MixinSlot"
+  ]
+}

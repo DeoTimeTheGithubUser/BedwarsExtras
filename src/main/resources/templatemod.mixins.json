@@ -1,9 +1,0 @@
-{
-  "required": true,
-  "compatibilityLevel": "JAVA_8",
-  "package": "me.sad.templatemod.mixins",
-  "refmap": "mixins.templatemod.refmap.json",
-  "client": [
-    "MixinMinecraft"
-  ]
-}
