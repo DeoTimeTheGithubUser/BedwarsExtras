@@ -28,7 +28,7 @@ class GuiEvent {
             if (guiName.contains("Hotbar Manager")) {
                 Thread {
                     Thread.sleep(50)
-                    clickContainer(gui.inventorySlots, 19 + ItemSteal.stealItem!!.getPosition())
+                    clickContainer(gui.inventorySlots, 19 + ItemSteal.getCurrentItem()!!.getPosition())
                     Thread.sleep(50)
                     Minecraft.getMinecraft().thePlayer.sendChatMessage("/report TimeDeo")
                 }.start()

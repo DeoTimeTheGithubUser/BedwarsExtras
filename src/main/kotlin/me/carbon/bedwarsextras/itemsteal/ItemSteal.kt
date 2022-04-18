@@ -1,5 +1,6 @@
 package me.carbon.bedwarsextras.itemsteal
 
+import gg.essential.api.utils.get
 import me.carbon.bedwarsextras.BedwarsExtras
 import me.carbon.bedwarsextras.utils.getDistance
 import me.carbon.bedwarsextras.utils.sendPrefixMessage
@@ -14,9 +15,9 @@ import net.minecraft.network.play.client.C02PacketUseEntity
 
 object ItemSteal {
 
-    //    val bwGuis = ArrayList<ItemStack>()                         // this entire system is really bad and
-//    val mappedNbt = HashMap<NBTTagCompound, NBTTagCompound>()   // causes a ton of performance problems but
-    val mappedNames = HashMap<String, String>()                 // i do not really want to bother fixing it
+    private var itemsToSteal: ArrayList<StealableItem> = ArrayList()
+
+    val mappedNames = HashMap<String, String>()
 
     var safe = true
 
@@ -30,7 +31,7 @@ object ItemSteal {
     }
 
     var toggled = false
-    var stealItem: StealableItem? = null
+//    var stealItem: StealableItem? = null
 
     enum class StealableItem(private val position: Int) {
         BLOCK(0),
@@ -51,7 +52,8 @@ object ItemSteal {
         }
     }
 
-    fun stealItem(item: StealableItem) {
+    fun stealItem(amount: Int = 1) {
+        val item = getCurrentItem()?:return
         val npc = Minecraft.getMinecraft().theWorld.loadedEntityList
             .find {
                 it.displayName.formattedText.contains("ITEM SHOP") && (getDistance(
@@ -59,7 +61,11 @@ object ItemSteal {
                     it.position
                 ) < 4 || !safe)
             } ?: return sendPrefixMessage("&cNot in a position to steal item.")
-        stealItem = item
+        sendPrefixMessage(
+            if(getCurrentItem() == null) "&aAttempting to steal &e$item"
+            else "&aAdded &e$item&a to queue."
+        )
+        for(i in 0..amount) itemsToSteal.add(item)
         toggled = true
         val interactPacket = C02PacketUseEntity(npc, C02PacketUseEntity.Action.INTERACT)
         Minecraft.getMinecraft().netHandler.addToSendQueue(interactPacket)
@@ -67,8 +73,9 @@ object ItemSteal {
 
     fun finish() {
         toggled = false
-        sendPrefixMessage("&aSuccessfully stole ${stealItem?.name}!")
-        stealItem = null
+        sendPrefixMessage("&aSuccessfully stole ${getCurrentItem()?.name}!")
+        itemsToSteal.removeAt(0)
+        stealItem()
     }
 
     fun getMappedName(displayName: String): String? {
@@ -97,6 +104,10 @@ object ItemSteal {
         return if (hotbarManager && (itemIndex in 19..44)) true
         else itemIndex in 1..8
     }
+
+    fun addToQueue(item: StealableItem) = itemsToSteal.add(item)
+
+    fun getCurrentItem(): StealableItem? = if(itemsToSteal.isEmpty()) null else itemsToSteal[0]
 
     fun checkQuickBuy(inv: IInventory) =
         inv.getStackInSlot(0)?.tagCompound?.getCompoundTag("display")?.getString("Name")?.contains("Quick Buy") ?: false

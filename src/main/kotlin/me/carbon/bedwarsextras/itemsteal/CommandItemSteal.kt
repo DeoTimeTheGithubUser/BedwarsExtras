@@ -25,9 +25,13 @@ class CommandItemSteal : CommandBase() {
                 if (args.size < 2) return sendPrefixMessage("&cInvalid item.")
                 if (ItemSteal.toggled) return sendPrefixMessage("&cAnother item is already being stolen!")
                 val stealItem = ItemSteal.StealableItem.fromString(args[1])
-                stealItem?.run { sendPrefixMessage("&aAttempting to steal &e${stealItem}") }
+                stealItem?.run {
+                    val amount = if(args.size > 1) args[2].toIntOrNull()?:1 else 1
+                    ItemSteal.addToQueue(stealItem)
+                    ItemSteal.stealItem(amount)
+                }
+
                     ?: return sendPrefixMessage("&cInvalid item.")
-                ItemSteal.stealItem(stealItem)
             }
             "togglesafe" -> {
                 ItemSteal.safe = !ItemSteal.safe
