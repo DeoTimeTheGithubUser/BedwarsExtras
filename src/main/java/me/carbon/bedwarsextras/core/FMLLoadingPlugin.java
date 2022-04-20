@@ -12,8 +12,6 @@ public class FMLLoadingPlugin implements IFMLLoadingPlugin {
 
     public FMLLoadingPlugin() {
         System.out.println("Injecting mixin");
-//        System.setProperty("devauth.enabled", "true");
-//        System.setProperty("devauth.account", "main");
         MixinBootstrap.init();
         Mixins.addConfiguration("bedwarsextras.mixins.json");
     }

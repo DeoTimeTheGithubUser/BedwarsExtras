@@ -28,10 +28,6 @@ fun clickContainer(container: Container, slot: Int) {
     Minecraft.getMinecraft().netHandler.addToSendQueue(packet)
 }
 
-fun clickInPlayerInventory(slot: Int) {
-    clickContainer(Minecraft.getMinecraft().thePlayer.inventoryContainer, slot)
-}
-
 fun getDistance(pos1: BlockPos, pos2: BlockPos): Double {
     val x = abs(pos2.x - pos1.x)
     val y = abs(pos2.y - pos1.y)

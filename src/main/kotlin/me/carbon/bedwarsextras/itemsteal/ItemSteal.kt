@@ -17,7 +17,7 @@ object ItemSteal {
 
     private var itemsToSteal: ArrayList<StealableItem> = ArrayList()
 
-    val mappedNames = HashMap<String, String>()
+    private val mappedNames = HashMap<String, String>()
 
     var safe = true
 
@@ -31,7 +31,6 @@ object ItemSteal {
     }
 
     var toggled = false
-//    var stealItem: StealableItem? = null
 
     enum class StealableItem(private val position: Int) {
         BLOCK(0),
